@@ -1,0 +1,16 @@
+.slide{
+    height: 554px;
+    border-radius: 16px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+.slide-1{
+    background-image: linear-gradient(180deg, rgba(3, 7, 18, 0.50) 0%, rgba(3, 7, 18, 0.00) 100%), url("../../assets/banner1.jpg");
+}
+.slide-2{
+    background-image: linear-gradient(180deg, rgba(3, 7, 18, 0.50) 0%, rgba(3, 7, 18, 0.00) 100%), url("../../assets/banner2.jpg");
+}
+.slide-3{
+    background-image: linear-gradient(180deg, rgba(3, 7, 18, 0.50) 0%, rgba(3, 7, 18, 0.00) 100%), url("../../assets/banner3.jpg");
+}
