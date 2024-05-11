@@ -6,33 +6,75 @@ const NavBar = () => {
      
         <li>
         <NavLink
+       
               className={({ isActive }) =>
                 isActive
-                  ? "font-semibold text-lg text-[#cc9933] py-1 rounded-lg "
-                  : " font-semibold  text-lg"
+                  ? "font-semibold text-lg text-black border-b-4  rounded-none border-b-[#CC9933] "
+                  : " font-semibold text-black text-lg"
               }
+              
               to="/"
             >
               Home
             </NavLink>
         </li>
         <li>
-          <a>Rooms</a>
+        <NavLink
+              className={({ isActive }) =>
+                isActive
+                  ? "font-semibold text-lg text-black border-b-4 rounded-none border-b-[#CC9933] "
+                  : " font-semibold text-black  text-lg"
+              }
+              to="/rooms"
+            >
+              Rooms
+            </NavLink>
+          
         </li>
         <li>
-          <a>My Bookings</a>
+        <NavLink
+              className={({ isActive }) =>
+                isActive
+                  ? "font-semibold text-lg text-black border-b-4 rounded-none border-b-[#CC9933] "
+                  : " font-semibold text-black  text-lg"
+              }
+              to="/mybookings"
+            >
+              My Bookings
+            </NavLink>
+          
         </li>
         <li>
-          <a>About Us</a>
+        <NavLink
+              className={({ isActive }) =>
+                isActive
+                  ? "font-semibold text-lg text-black border-b-4 rounded-none border-b-[#CC9933]  "
+                  : " font-semibold text-black  text-lg"
+              }
+              to="/aboutus"
+            >
+              About Us
+            </NavLink>
+        
         </li>
          <li>
-          <a>Contact Us</a>
+         <NavLink
+              className={({ isActive }) =>
+                isActive
+                  ? "font-semibold text-lg text-black border-b-4 rounded-none border-b-[#CC9933]  "
+                  : " font-semibold text-black  text-lg"
+              }
+              to="/contactus"
+            >
+              Contact Us
+            </NavLink>
+      
         </li>
     
     </>
   );
   return (
-    <div className="navbar bg-base-100 mt-5">
+    <div className="navbar    ">
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -53,7 +95,7 @@ const NavBar = () => {
           </div>
           <ul
             tabIndex={0}
-            className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
+            className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52  "
           >
            {navlinks}
           </ul>
@@ -70,7 +112,7 @@ const NavBar = () => {
 
       <div className="navbar-end">
         <div className="mr-5 hidden lg:flex">
-          <ul className="menu menu-horizontal px-1 text-base font-bold">
+          <ul className="menu menu-horizontal px-1   text-base font-bold">
            {navlinks}
           </ul>
         </div>

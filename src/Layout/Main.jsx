@@ -4,7 +4,7 @@ import NavBar from "../Components/NavBar/NavBar";
 
 const Main = () => {
     return (
-        <div className="container mx-auto">
+        <div >
             <NavBar></NavBar>
             <Outlet></Outlet>
         </div>
