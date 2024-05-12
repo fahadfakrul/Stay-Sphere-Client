@@ -1,80 +1,10 @@
-import { NavLink } from "react-router-dom";
-import logo from "../../assets/crown.png";
+import { Link, NavLink } from "react-router-dom";
+import logo from "../../assets/crown.png"
+
 const NavBar = () => {
-  const navlinks = (
-    <>
-     
-        <li>
-        <NavLink
-       
-              className={({ isActive }) =>
-                isActive
-                  ? "font-semibold text-lg text-black border-b-4  rounded-none border-b-[#CC9933] "
-                  : " font-semibold text-black text-lg"
-              }
-              
-              to="/"
-            >
-              Home
-            </NavLink>
-        </li>
-        <li>
-        <NavLink
-              className={({ isActive }) =>
-                isActive
-                  ? "font-semibold text-lg text-black border-b-4 rounded-none border-b-[#CC9933] "
-                  : " font-semibold text-black  text-lg"
-              }
-              to="/rooms"
-            >
-              Rooms
-            </NavLink>
-          
-        </li>
-        <li>
-        <NavLink
-              className={({ isActive }) =>
-                isActive
-                  ? "font-semibold text-lg text-black border-b-4 rounded-none border-b-[#CC9933] "
-                  : " font-semibold text-black  text-lg"
-              }
-              to="/mybookings"
-            >
-              My Bookings
-            </NavLink>
-          
-        </li>
-        <li>
-        <NavLink
-              className={({ isActive }) =>
-                isActive
-                  ? "font-semibold text-lg text-black border-b-4 rounded-none border-b-[#CC9933]  "
-                  : " font-semibold text-black  text-lg"
-              }
-              to="/aboutus"
-            >
-              About Us
-            </NavLink>
-        
-        </li>
-         <li>
-         <NavLink
-              className={({ isActive }) =>
-                isActive
-                  ? "font-semibold text-lg text-black border-b-4 rounded-none border-b-[#CC9933]  "
-                  : " font-semibold text-black  text-lg"
-              }
-              to="/contactus"
-            >
-              Contact Us
-            </NavLink>
-      
-        </li>
-    
-    </>
-  );
+  
   return (
-    <div className="navbar    ">
+    <div className="navbar bg-base-100 my-3">
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -95,52 +25,158 @@ const NavBar = () => {
           </div>
           <ul
             tabIndex={0}
-            className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52  "
+            className="menu menu-sm dropdown-content mt-3 z-[10] p-2 shadow bg-base-100 rounded-box w-52"
           >
-           {navlinks}
+            <NavLink
+            className={({ isActive }) =>
+              isActive
+                ? "font-semibold text-lg font-playfair  border-b-4 border-[#CC9933] px-5 py-3  "
+                : " font-semibold  font-playfair text-lg"
+            }
+            to="/"
+          >
+            Home
+          </NavLink>
+          <NavLink
+            className={({ isActive }) =>
+              isActive
+                ? "font-semibold text-lg  font-playfair  border-b-4 border-[#CC9933] px-5 py-3 "
+                : "font-semibold  font-playfair text-lg"
+            }
+            to="/rooms"
+          >
+            Rooms
+          </NavLink>
+          <NavLink
+            className={({ isActive }) =>
+              isActive
+                ? "font-semibold text-lg  font-playfair  border-b-4 border-[#CC9933] px-5 py-3 "
+                : " font-semibold  font-playfair text-lg"
+            }
+            to="/mybookings"
+          >
+            My Bookings
+          </NavLink>
+          <NavLink
+            className={({ isActive }) =>
+              isActive
+                ? "font-semibold text-lg  font-playfair  border-b-4 border-[#CC9933] px-5 py-3  "
+                : " font-semibold  font-playfair text-lg"
+            }
+            to="/aboutus"
+          >
+            About Us
+          </NavLink>
+          <NavLink
+            className={({ isActive }) =>
+              isActive
+                ? "font-semibold text-lg  font-playfair  border-b-4 border-[#CC9933] px-5 py-3  "
+                : " font-semibold  font-playfair text-lg"
+            }
+            to="/contactus"
+          >
+            Contact Us
+          </NavLink>
           </ul>
         </div>
-        <div>
-          <div className="flex items-center ml-5">
-            <img className="h-12" src={logo} alt="" />
-            <a className=" ml-3 text-xl lg:text-3xl font-semibold lg:font-bold text-black">
+        <img className="h-14 ml-5" src={logo} alt="" />
+        <a className="btn btn-ghost text-base lg:text-3xl font-semibold lg:font-bold text-black">
          Stay Sphere
         </a>
-          </div>
-        </div>
       </div>
-
+      
       <div className="navbar-end">
-        <div className="mr-5 hidden lg:flex">
-          <ul className="menu menu-horizontal px-1   text-base font-bold">
-           {navlinks}
-          </ul>
-        </div>
-        <div className="dropdown dropdown-end">
-          <div
-            tabIndex={0}
-            role="button"
-            className="btn btn-ghost btn-circle avatar"
+      <div className=" hidden lg:flex">
+        <ul className="menu-horizontal px-1  items-center gap-5 mr-5">
+          <NavLink
+            className={({ isActive }) =>
+              isActive
+                ? "font-semibold text-lg font-playfair  border-b-4 border-[#CC9933] px-5 py-3  "
+                : " font-semibold  font-playfair text-lg"
+            }
+            to="/"
           >
-            <div className="w-10 rounded-full">
-              <img
-                alt="Tailwind CSS Navbar component"
-                src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
-              />
+            Home
+          </NavLink>
+          <NavLink
+            className={({ isActive }) =>
+              isActive
+                ? "font-semibold text-lg  font-playfair  border-b-4 border-[#CC9933] px-5 py-3  "
+                : "font-semibold  font-playfair text-lg"
+            }
+            to="/rooms"
+          >
+            Rooms
+          </NavLink>
+          <NavLink
+            className={({ isActive }) =>
+              isActive
+                ? "font-semibold text-lg  font-playfair  border-b-4 border-[#CC9933] px-5 py-3  "
+                : " font-semibold  font-playfair text-lg"
+            }
+            to="/mybookings"
+          >
+            My Bookings
+          </NavLink>
+          <NavLink
+            className={({ isActive }) =>
+              isActive
+                ? "font-semibold text-lg  font-playfair  border-b-4 border-[#CC9933] px-5 py-3  "
+                : " font-semibold  font-playfair text-lg"
+            }
+            to="/aboutus"
+          >
+            About Us
+          </NavLink>
+          <NavLink
+            className={({ isActive }) =>
+              isActive
+                ? "font-semibold text-lg  font-playfair  border-b-4 border-[#CC9933] px-5 py-3  "
+                : " font-semibold  font-playfair text-lg"
+            }
+            to="/contactus"
+          >
+            Contact Us
+          </NavLink>
+        </ul>
+      </div>
+        {/* {user? ( */}
+          <div className="dropdown dropdown-end">
+            <div
+              tabIndex={0}
+              role="button"
+              className="btn btn-ghost btn-circle avatar tooltip hover:tooltip-open tooltip-left " data-tip="no name available"
+              // {user?.displayName || }
+            >
+              <div className="w-10 rounded-full ">
+                <img
+                  
+                  alt="Tailwind CSS Navbar component"
+                  src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
+                  // {user?.photoURL || }
+                />
+              </div>
             </div>
+            <ul
+              tabIndex={0}
+              className="mt-3 z-[10] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-60  text-lg"
+            >
+              <li>
+                {/* <a >{user?.email || "email not found"}</a> */}
+              </li>
+              
+              <li className="text-[#3A516E]">
+                <button >Logout</button> 
+                {/* onClick={logOut} */}
+              </li>
+            </ul>
           </div>
-          <ul
-            tabIndex={0}
-            className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52"
-          >
-           
-            <li>
-            </li>
-            <li>
-              <a>Logout</a>
-            </li>
-          </ul>
-        </div>
+        {/* ) : ( */}
+          <Link to={"/login"}>
+            <a className="btn text-[#3A516E] text-lg">Login</a>
+          </Link>
+          
+        {/* )} */}
       </div>
     </div>
   );

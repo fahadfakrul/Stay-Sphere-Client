@@ -19,7 +19,7 @@ const NewsLetter = () => {
            
             <div className="flex flex-row bg-transparent p-2 bg-gray-900 bg-opacity-30 rounded-lg">
 			<input type="text" placeholder="example@email.com" className="w-3/5 p-3 rounded-l-lg sm:w-2/3" />
-			<button type="button" className="w-2/5 p-3 font-semibold rounded-r-lg sm:w-1/3 dark:bg-[#CC9933] dark:text-white">Subscribe</button>
+			<button type="button " className="w-2/5 p-3 font-semibold rounded-r-lg sm:w-1/3 dark:bg-[#CC9933] hover:text-black  dark:text-white">Subscribe</button>
 		</div>
 
             
