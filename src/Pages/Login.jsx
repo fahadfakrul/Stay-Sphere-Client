@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 const Login = () => {
   return (
-    <div className="flex w-full max-w-sm mx-auto overflow-hidden   rounded-xl mt-5 shadow-lg  lg:max-w-4xl">
+    <div className="flex w-full max-w-sm mx-auto overflow-hidden   rounded-xl my-12 shadow-lg  lg:max-w-4xl ">
       <div
         className="hidden bg-cover bg-bottom lg:block lg:w-1/2"
         style={{
@@ -99,7 +99,7 @@ const Login = () => {
         </div>
 
         <div className="mt-6">
-          <button className="w-full px-6 py-3 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-[#CC9933] rounded-lg hover:bg-gray-700 focus:outline-none focus:ring focus:ring-gray-300 focus:ring-opacity-50">
+          <button className="w-full px-6 py-3 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-[#CC9933] rounded-lg hover:bg-gray-700 focus:outline-none focus:ring  focus:ring-gray-300 focus:ring-opacity-50">
             Sign In
           </button>
         </div>
@@ -110,7 +110,7 @@ const Login = () => {
 
           <Link to="/register"
             href="#"
-            className="btn bg-white text-xs font-semibold uppercase text-[#CC9933] hover:underline"
+            className="btn bg-white text-xs font-semibold uppercase  text-[#CC9933] hover:underline"
 
           >
             sign up
