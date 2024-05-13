@@ -6,6 +6,7 @@ import Rooms from "../Pages/Rooms";
 import Login from "../Pages/Login";
 import Register from "../Pages/Register";
 import RoomDetails from "../Pages/RoomDetails";
+import PrivateRoute from "../PrivateRoute/PrivateRoute";
 
 
 
@@ -36,7 +37,8 @@ const router = createBrowserRouter([
         },
         {
           path: "/roomdetails/:id",
-          element: <RoomDetails></RoomDetails>,
+          element: <PrivateRoute><RoomDetails></RoomDetails></PrivateRoute>,
+          loader: () => fetch(`${import.meta.env.VITE_API_URL}/rooms`)
         },
       ],
     },
