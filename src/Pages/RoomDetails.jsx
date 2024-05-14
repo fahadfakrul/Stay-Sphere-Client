@@ -1,21 +1,40 @@
-import { useLoaderData, useParams } from "react-router-dom";
+import { Await, useLoaderData } from "react-router-dom";
+import UseAuth from "../Hooks/UseAuth";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { useState } from "react";
+import axios from "axios";
 
 const RoomDetails = () => {
-  const { id } = useParams();
-  const rooms = useLoaderData();
-
-  const roomDetails = rooms.find((room) => room._id === id);
+  const { user } = UseAuth();
+  const roomDetails = useLoaderData();
   const isAvailable = roomDetails.availability.toLowerCase() === "available";
-  //   console.log(roomDetails.room_description);
-  //   const {
-  //     room_description,
-  //     full_description,
-  //     price_per_night,
-  //     room_size,
-  //     availability,
-  //     room_images,
-  //     special_offers,
-  //   } = roomDetails;
+  const [startDate, setStartDate] = useState(new Date());
+
+  const handleFormSubmit = async e => {
+    e.preventDefault();
+    const roomId = roomDetails._id;
+    const roomName = roomDetails.room_description;
+    const roomSize = roomDetails.room_size;
+    const price = roomDetails.price_per_night;
+    const name = user?.displayName;
+    const email = user?.email;
+    const availability= roomDetails.availability;
+    const bookingDate = startDate;
+    const bookingData = {
+      roomId, roomName, roomSize, price, name, email, availability,bookingDate
+    }
+    try {
+      const {data} = await axios.post(`${import.meta.env.VITE_API_URL}/booking`, bookingData)
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+      console.log(error.message);
+    }
+    
+  }
+
+  
   return (
     <div>
       <section className="dark:bg-gray-100 dark:text-gray-800 ">
@@ -66,7 +85,16 @@ const RoomDetails = () => {
           <div className="grid lg:gap-8 lg:grid-cols-2 lg:items-center">
             <div>
               <h3 className="text-2xl font-serif font-bold tracking-tight sm:text-3xl dark:text-gray-900">
-                The Room is currently <span className={` ${isAvailable? "font-serif text-green-600" : "font-serif text-red-500"}`}>{roomDetails.availability}</span>
+                The Room is currently{" "}
+                <span
+                  className={` ${
+                    isAvailable
+                      ? "font-serif text-green-600"
+                      : "font-serif text-red-500"
+                  }`}
+                >
+                  {roomDetails.availability}
+                </span>
               </h3>{" "}
               <br />
               <h3 className="text-2xl font-serif font-bold tracking-tight sm:text-3xl dark:text-gray-900">
@@ -90,7 +118,13 @@ const RoomDetails = () => {
                   <br />
                 </>
               )}
-              <button onClick={() => document.getElementById("my_modal_1").showModal()} className="btn w-full text-white  bg-[#CC9933]" disabled={!isAvailable}>
+              <button
+                onClick={() =>
+                  document.getElementById("my_modal_1").showModal()
+                }
+                className="btn w-full text-white  bg-[#CC9933]"
+                disabled={!isAvailable}
+              >
                 Book Now
               </button>
             </div>
@@ -105,21 +139,58 @@ const RoomDetails = () => {
         </div>
       </section>
       {/* Open the modal using document.getElementById('ID').showModal() method */}
-      
+      <form onSubmit={handleFormSubmit}>
       <dialog id="my_modal_1" className="modal">
-        <div className="modal-box">
-          <h3 className="font-bold text-lg">Hello!</h3>
-          <p className="py-4">
-            Press ESC key or click the button below to close
-          </p>
-          <div className="modal-action">
-            <form method="dialog">
-              {/* if there is a button in form, it will close the modal */}
-              <button className="btn">Close</button>
-            </form>
+        <div className="modal-box bg-slate-100 space-y-6">
+          <h3 className="font-bold font-serif text-lg ">
+            Room Description:{" "}
+            <span className="font-serif font-semibold text-[#3A516E] text-lg">
+              {roomDetails.room_description}
+            </span>
+          </h3>
+          <div className="flex gap-4">
+            <h3 className="font-bold font-serif text-lg">
+              Room Size:{" "}
+              <span className="font-serif font-semibold text-[#3A516E] text-lg">
+                {roomDetails.room_size}
+              </span>
+            </h3>
+            <h3 className="font-bold font-serif text-lg">
+              Price:{" "}
+              <span className="font-serif font-semibold text-[#3A516E] text-lg">
+                ${roomDetails.price_per_night}
+              </span>
+            </h3>
           </div>
+          {roomDetails.special_offers && (
+          <h3 className="font-bold font-serif text-lg">
+            Offer:{" "}
+            <span className="font-serif font-semibold text-[#3A516E] text-lg">
+              {roomDetails.special_offers}
+            </span>
+          </h3>)}
+          <h3 className="font-bold font-serif text-lg">
+            Name:{" "}
+            <span className="font-serif font-semibold text-[#3A516E] text-lg">
+              {user.displayName}
+            </span>
+          </h3>
+          <h3 className="font-bold font-serif text-lg">
+            Email:{" "}
+            <span className="font-serif font-semibold text-[#3A516E] text-lg">
+              {user.email}
+            </span>
+          </h3>
+          <h3 className="font-bold font-serif text-lg">
+            Booking date: <DatePicker className="border p-2 rounded-md" selected={startDate} onChange={(date) => setStartDate(date)} />
+            
+          </h3>
+              <input className="btn w-full text-white  bg-[#CC9933]" type="submit" value="Confirm" />
+            <p className="text-sm">Press ESC to cancel!</p>
+          
         </div>
       </dialog>
+      </form>
     </div>
   );
 };
