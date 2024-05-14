@@ -5,6 +5,7 @@ const RoomDetails = () => {
   const rooms = useLoaderData();
 
   const roomDetails = rooms.find((room) => room._id === id);
+  const isAvailable = roomDetails.availability.toLowerCase() === "available";
   //   console.log(roomDetails.room_description);
   //   const {
   //     room_description,
@@ -48,8 +49,8 @@ const RoomDetails = () => {
                     {roomDetails.room_size}
                   </span>{" "}
                   space offers plenty of room for you to unwind and make
-                  yourself at home. Whether you&apos;re traveling solo or with family
-                  and friends, our accommodations cater to your needs.
+                  yourself at home. Whether you&apos;re traveling solo or with
+                  family and friends, our accommodations cater to your needs.
                 </h3>
                 <p className="mt-3 text-lg dark:text-gray-600"></p>
               </div>
@@ -65,7 +66,7 @@ const RoomDetails = () => {
           <div className="grid lg:gap-8 lg:grid-cols-2 lg:items-center">
             <div>
               <h3 className="text-2xl font-serif font-bold tracking-tight sm:text-3xl dark:text-gray-900">
-                The Room is currently {roomDetails.availability}
+                The Room is currently <span className={` ${isAvailable? "font-serif text-green-600" : "font-serif text-red-500"}`}>{roomDetails.availability}</span>
               </h3>{" "}
               <br />
               <h3 className="text-2xl font-serif font-bold tracking-tight sm:text-3xl dark:text-gray-900">
@@ -89,7 +90,7 @@ const RoomDetails = () => {
                   <br />
                 </>
               )}
-              <button className="btn w-full text-white  bg-[#CC9933]">
+              <button onClick={() => document.getElementById("my_modal_1").showModal()} className="btn w-full text-white  bg-[#CC9933]" disabled={!isAvailable}>
                 Book Now
               </button>
             </div>
@@ -103,6 +104,22 @@ const RoomDetails = () => {
           </div>
         </div>
       </section>
+      {/* Open the modal using document.getElementById('ID').showModal() method */}
+      
+      <dialog id="my_modal_1" className="modal">
+        <div className="modal-box">
+          <h3 className="font-bold text-lg">Hello!</h3>
+          <p className="py-4">
+            Press ESC key or click the button below to close
+          </p>
+          <div className="modal-action">
+            <form method="dialog">
+              {/* if there is a button in form, it will close the modal */}
+              <button className="btn">Close</button>
+            </form>
+          </div>
+        </div>
+      </dialog>
     </div>
   );
 };
