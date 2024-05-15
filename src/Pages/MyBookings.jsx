@@ -4,6 +4,8 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import Swal from "sweetalert2";
 import ReactDatePicker from "react-datepicker";
+import moment from 'moment';
+moment().format(); 
 
 const MyBookings = () => {
   const { user } = UseAuth();
@@ -50,6 +52,46 @@ const MyBookings = () => {
       }
     });
   };
+  
+  
+     
+  const handleReviewSubmit = async (e, roomId) => {
+    e.preventDefault();
+    const form = e.target;
+    const review = form.review.value;
+    const rating = form.rating.value;
+    const name= user?.displayName;
+    const email= user?.email;
+    const id = roomId;
+    const timestamp = moment().format('YYYY-MM-DD HH:mm:ss');
+    // console.log(timestamp);
+        console.log(review, rating);
+    const reviewData = {
+        name,
+        email,
+        rating,
+        review,
+        timestamp,
+        id,
+
+      }
+      try {
+        const {data} = await axios.post(`${import.meta.env.VITE_API_URL}/reviews`, reviewData)
+        toast.success('Review submitted successfully')
+        getData()
+        console.log(data);
+         if (modalRef.current) {
+            modalRef.current.close();
+          }
+        
+      } catch (error) {
+        console.log(error);
+        toast.error(error.message);
+      console.log(error.message);
+      }
+      
+    }
+
 
   const handleUpdateFormSubmit = async (id) => {
     const bookingDate = startDate;
@@ -58,8 +100,10 @@ const MyBookings = () => {
       `${import.meta.env.VITE_API_URL}/booking-update/${id}`,
       { bookingDate }
     );
+    
     console.log(data);
     getData();
+    toast.success('Date updated successfully')
     if (modalRef.current) {
       modalRef.current.close();
     }
@@ -200,30 +244,46 @@ const MyBookings = () => {
                       Review
                     </button>
                     {/* You can open the modal using document.getElementById('ID').showModal() method */}
-
-                    <dialog id="my_modal_3" className="modal">
+                    <form method="dialog" onSubmit={(e) => handleReviewSubmit(e, booking.roomId
+)}>
+                    <dialog ref={modalRef} id="my_modal_3" className="modal">
                       <div className="modal-box text-left">
-                        <form method="dialog">
+                        
                           {/* if there is a button in form, it will close the modal */}
-                          <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
-                            ✕
-                          </button>
-                          <h3 className="font-bold text-xl">Share Your Experience with Us</h3>
-                          <textarea id="subject" name="review" placeholder="Write your review here..." className="p-4 border"  rows="5" cols="60"></textarea>
-                          <div className=""><select name="rating"  >
-                            <option className="w-5" value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                          </select></div>
-                        <p className="py-4">
-                          Press ESC key or click on ✕ button to close
-                        </p>
-                        </form>
-                       
+                          
+                          <h3 className="font-bold text-xl mb-5">
+                            Share Your Experience with Us
+                          </h3>
+                          <p className="text-lg font-semibold">Name: {user.displayName}</p>
+                          <textarea
+                            id="subject"
+                            name="review"
+                            placeholder="Write your review here..."
+                            className="p-4 border text-base rounded-lg "
+                            rows="5"
+                            cols="50"
+                          ></textarea>
+                          <div>
+                            <select
+                              className="w-20 h-5 font-bold text-lg mt-5 "
+                              defaultValue="5"
+                              name="rating"
+                            >
+                              <option value="5">5 star</option>
+                              <option value="4">4 star</option>
+                              <option value="3">3 star</option>
+                              <option value="2">2 star</option>
+                              <option value="1">1 star</option>
+                            </select>
+                          </div>
+                          <input className="mt-4 btn w-full text-white  bg-[#CC9933]" type="submit" value="Submit" />
+                          <p className="py-4">
+                            Press ESC key  to close
+                          </p>
+                        
                       </div>
                     </dialog>
+                    </form>
                   </td>
                 </tr>
               ))}
