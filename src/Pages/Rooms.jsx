@@ -13,6 +13,8 @@ const Rooms = () => {
     };
     getData();
   }, []);
+
+  
   return (
     <div>
       <section className="py-6 sm:py-12 dark:bg-gray-100 dark:text-gray-800">
