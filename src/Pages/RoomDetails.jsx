@@ -124,7 +124,7 @@ const RoomDetails = () => {
               )}
               <button
                 onClick={() =>
-                  document.getElementById("my_modal_1").showModal()
+                  document.getElementById("my_modal_4").showModal()
                 }
                 className="btn w-full text-white  bg-[#CC9933]"
                 disabled={!isAvailable}
@@ -144,15 +144,15 @@ const RoomDetails = () => {
       </section>
       {/* Open the modal using document.getElementById('ID').showModal() method */}
       <form onSubmit={handleFormSubmit}>
-      <dialog ref={modalRef} id="my_modal_1" className="modal">
-        <div className="modal-box bg-slate-100 space-y-6">
+      <dialog ref={modalRef} id="my_modal_4" className="modal">
+        <div className="modal-box w-11/12 max-w-5xl bg-slate-100 space-y-6">
           <h3 className="font-bold font-serif text-lg ">
             Room Description:{" "}
             <span className="font-serif font-semibold text-[#3A516E] text-lg">
               {roomDetails.room_description}
             </span>
           </h3>
-          <div className="flex gap-4">
+          < div className="flex gap-4 lg:gap-20">
             <h3 className="font-bold font-serif text-lg">
               Room Size:{" "}
               <span className="font-serif font-semibold text-[#3A516E] text-lg">
@@ -185,8 +185,8 @@ const RoomDetails = () => {
               {user.email}
             </span>
           </h3>
-          <h3 className="font-bold font-serif text-lg">
-            Booking date: <DatePicker className="border p-2 rounded-md" selected={startDate} onChange={(date) => setStartDate(date)} />
+          <h3 className="font-bold font-serif text-lg h-42">
+            Booking date: <DatePicker className="border p-2 rounded-md"  selected={startDate} onChange={(date) => setStartDate(date)} />
             
           </h3>
               <input className="btn w-full text-white  bg-[#CC9933]" type="submit" value="Confirm" />
