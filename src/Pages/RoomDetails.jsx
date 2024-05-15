@@ -8,6 +8,7 @@ import axios from "axios";
 const RoomDetails = () => {
   const { user } = UseAuth();
   const roomDetails = useLoaderData();
+  console.log(roomDetails)
   const isAvailable = roomDetails.availability.toLowerCase() === "available";
   const [startDate, setStartDate] = useState(new Date());
   const modalRef = useRef(null);
