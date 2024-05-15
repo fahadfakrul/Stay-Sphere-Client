@@ -1,8 +1,8 @@
-import { Await, useLoaderData } from "react-router-dom";
+import {  useLoaderData } from "react-router-dom";
 import UseAuth from "../Hooks/UseAuth";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import axios from "axios";
 
 const RoomDetails = () => {
@@ -10,6 +10,7 @@ const RoomDetails = () => {
   const roomDetails = useLoaderData();
   const isAvailable = roomDetails.availability.toLowerCase() === "available";
   const [startDate, setStartDate] = useState(new Date());
+  const modalRef =  useRef(null);
 
   const handleFormSubmit = async e => {
     e.preventDefault();
@@ -21,6 +22,7 @@ const RoomDetails = () => {
     const email = user?.email;
     const availability= roomDetails.availability;
     const bookingDate = startDate;
+    
     const bookingData = {
       roomId, roomName, roomSize, price, name, email, availability,bookingDate
     }
@@ -31,7 +33,9 @@ const RoomDetails = () => {
       console.log(error);
       console.log(error.message);
     }
-    
+    if (modalRef.current) {
+      modalRef.current.close();
+    }
   }
 
   
@@ -140,7 +144,7 @@ const RoomDetails = () => {
       </section>
       {/* Open the modal using document.getElementById('ID').showModal() method */}
       <form onSubmit={handleFormSubmit}>
-      <dialog id="my_modal_1" className="modal">
+      <dialog ref={modalRef} id="my_modal_1" className="modal">
         <div className="modal-box bg-slate-100 space-y-6">
           <h3 className="font-bold font-serif text-lg ">
             Room Description:{" "}
