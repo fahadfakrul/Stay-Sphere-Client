@@ -2,6 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import UseAuth from "../Hooks/UseAuth";
 import toast from "react-hot-toast";
 import bgImg from "../assets/login.jpg"
+import { Helmet } from "react-helmet";
 const Login = () => {
   const navigate = useNavigate();
   const { signInUser, googleLogin } = UseAuth();
@@ -34,6 +35,11 @@ const Login = () => {
   };
   return (
     <div className="flex w-full max-w-sm mx-auto overflow-hidden   rounded-xl my-12 shadow-lg  lg:max-w-4xl ">
+      <Helmet>
+                <meta charSet="utf-8" />
+                <title>Login- Stay Sphere</title>
+                <link rel="canonical" href="http://mysite.com/example" />
+            </Helmet>
       <div
         className="hidden bg-cover bg-bottom lg:block lg:w-1/2"
         style={{

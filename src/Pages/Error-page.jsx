@@ -1,8 +1,14 @@
+import { Helmet } from "react-helmet";
 
 
 const ErrorPage = () => {
     return (
         <div>
+			<Helmet>
+                <meta charSet="utf-8" />
+                <title>Error- Stay Sphere</title>
+                <link rel="canonical" href="http://mysite.com/example" />
+            </Helmet>
             <section className="flex items-center h-full p-16 dark:bg-gray-50 dark:text-gray-800">
 	<div className="container flex flex-col items-center justify-center px-5 mx-auto my-8">
 		<div className="max-w-md text-center">

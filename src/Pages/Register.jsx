@@ -2,6 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import bgImg from "../assets/register.jpg";
 import UseAuth from "../Hooks/UseAuth";
 import toast from "react-hot-toast";
+import { Helmet } from "react-helmet";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -31,6 +32,11 @@ const Register = () => {
   };
   return (
     <div className="flex w-full max-w-sm mx-auto overflow-hidden border mt-5 rounded-xl shadow-lg  lg:max-w-4xl">
+      <Helmet>
+                <meta charSet="utf-8" />
+                <title>Register - Stay Sphere</title>
+                <link rel="canonical" href="http://mysite.com/example" />
+            </Helmet>
       <div className="w-full px-6 py-6 md:px-8 lg:w-1/2">
         <p className=" text-xl text-center text-black ">Welcome!</p>
 

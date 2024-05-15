@@ -4,6 +4,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useEffect, useRef, useState } from "react";
 import axios from "axios";
+import { Helmet } from "react-helmet";
 
 const RoomDetails = () => {
   const { user } = UseAuth();
@@ -62,6 +63,11 @@ const RoomDetails = () => {
 
   return (
     <div>
+      <Helmet>
+                <meta charSet="utf-8" />
+                <title>Room Details - Stay Sphere</title>
+                <link rel="canonical" href="http://mysite.com/example" />
+            </Helmet>
       <section className="dark:bg-gray-100 dark:text-gray-800 ">
         <div className="container max-w-xl p-6 py-12 mx-auto space-y-24 lg:px-8 lg:max-w-7xl">
           <div>

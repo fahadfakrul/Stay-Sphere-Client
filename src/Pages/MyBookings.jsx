@@ -5,6 +5,7 @@ import toast from "react-hot-toast";
 import Swal from "sweetalert2";
 import ReactDatePicker from "react-datepicker";
 import moment from 'moment';
+import { Helmet } from "react-helmet";
 moment().format(); 
 
 const MyBookings = () => {
@@ -110,6 +111,11 @@ const MyBookings = () => {
   };
   return (
     <div>
+        <Helmet>
+                <meta charSet="utf-8" />
+                <title>My Bookings - Stay Sphere</title>
+                <link rel="canonical" href="http://mysite.com/example" />
+            </Helmet>
       <div className="container p-2 mx-auto sm:p-4 dark:text-gray-800">
         <div className="flex  gap-5">
           <h2 className="mb-4 text-2xl font-semibold leading-tight">
