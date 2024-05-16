@@ -9,6 +9,7 @@ import {
 } from "firebase/auth";
 import { createContext, useEffect, useState } from "react";
 import auth from "../Firebase/firebase.config";
+import axios from "axios";
 
 export const AuthContext = createContext();
 const AuthProviders = ({ children }) => {
@@ -17,18 +18,18 @@ const AuthProviders = ({ children }) => {
 
   const googleProvider = new GoogleAuthProvider();
 
-
-  const createUser = (email,password) =>{
+  const createUser = (email, password) => {
     setLoading(true);
-    return createUserWithEmailAndPassword(auth,email,password);
-}
+    return createUserWithEmailAndPassword(auth, email, password);
+  };
 
-const updateUser = (name, photo) =>{
+  const updateUser = (name, photo) => {
     setLoading(true);
-    return  updateProfile(auth.currentUser, {
-      displayName: name, photoURL: photo
-    })
-}
+    return updateProfile(auth.currentUser, {
+      displayName: name,
+      photoURL: photo,
+    });
+  };
 
   const signInUser = (email, password) => {
     setLoading(true);
@@ -40,10 +41,12 @@ const updateUser = (name, photo) =>{
     return signInWithPopup(auth, googleProvider);
   };
 
-  const logOut = () => {
+  const logOut = async() => {
     setLoading(true);
+    const {data} = await axios(`${import.meta.env.VITE_API_URL}/logout`,{withCredentials:true});
+    console.log(data);
     setUser(null);
-    signOut(auth);
+    return signOut(auth);
   };
 
   useEffect(() => {
@@ -62,7 +65,7 @@ const updateUser = (name, photo) =>{
     googleLogin,
     signInUser,
     logOut,
-    updateUser ,
+    updateUser,
     setUser,
     createUser,
   };

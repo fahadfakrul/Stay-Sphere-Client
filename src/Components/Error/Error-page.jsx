@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import error from "../../assets/error.png"
+import error from "../../assets/error.png";
 
 const ErrorPage = () => {
   return (
@@ -16,7 +16,7 @@ const ErrorPage = () => {
               homepage.
             </p>
             <Link
-            to="/"
+              to="/"
               rel="noopener noreferrer"
               href="#"
               className="px-8 py-3 font-semibold rounded dark:bg-[#CC9933] dark:text-gray-50"

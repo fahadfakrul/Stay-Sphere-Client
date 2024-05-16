@@ -3,11 +3,12 @@ import bgImg from "../assets/register.jpg";
 import UseAuth from "../Hooks/UseAuth";
 import toast from "react-hot-toast";
 import { Helmet } from "react-helmet";
+import axios from "axios";
 
 const Register = () => {
   const navigate = useNavigate();
-  const {createUser, updateUser,setUser,user }= UseAuth();
-  const handleRegister = async(e) => {
+  const { createUser, updateUser, setUser } = UseAuth();
+  const handleRegister = async (e) => {
     e.preventDefault();
     const form = e.target;
     const name = form.name.value;
@@ -17,26 +18,31 @@ const Register = () => {
     console.log(name, email, password, photo);
 
     try {
-      const result = await createUser(email, password)
-      console.log(result);
-      await updateUser(name, photo)
-      console.log(user);
-      setUser({...user,photoURL: photo, displayName: name, email: email});
-      console.log(user);
-      navigate('/')
-      toast.success('Sign up successful')
+      const result = await createUser(email, password);
+      await updateUser(name, photo);
+
+      setUser({ ...result?.user, photoURL: photo, displayName: name, email: email });
+
+      const { data } = await axios.post(
+        `${import.meta.env.VITE_API_URL}/jwt`,
+        { email: result?.user?.email },
+        { withCredentials: true }
+      );
+      console.log(data);
+      navigate("/");
+      toast.success("Sign up successful");
     } catch (error) {
       console.log(error);
-      toast.error(error?.message)
+      toast.error(error?.message);
     }
   };
   return (
     <div className="flex w-full max-w-sm mx-auto overflow-hidden border mt-5 rounded-xl shadow-lg  lg:max-w-4xl">
       <Helmet>
-                <meta charSet="utf-8" />
-                <title>Register - Stay Sphere</title>
-                <link rel="canonical" href="http://mysite.com/example" />
-            </Helmet>
+        <meta charSet="utf-8" />
+        <title>Register - Stay Sphere</title>
+        <link rel="canonical" href="http://mysite.com/example" />
+      </Helmet>
       <div className="w-full px-6 py-6 md:px-8 lg:w-1/2">
         <p className=" text-xl text-center text-black ">Welcome!</p>
 

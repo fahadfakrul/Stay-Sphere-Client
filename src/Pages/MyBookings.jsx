@@ -4,21 +4,19 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import Swal from "sweetalert2";
 import ReactDatePicker from "react-datepicker";
-import moment from 'moment';
+import moment from "moment";
 import { Helmet } from "react-helmet";
-moment().format(); 
+moment().format();
 
 const MyBookings = () => {
   const { user } = UseAuth();
   const modalRef = useRef(null);
   const [bookings, setBookings] = useState([]);
   const [startDate, setStartDate] = useState(new Date());
- 
-  
- 
+
   const getData = async () => {
     const { data } = await axios(
-      `${import.meta.env.VITE_API_URL}/bookings/${user?.email}`
+      `${import.meta.env.VITE_API_URL}/bookings/${user?.email}`,{withCredentials: true}
     );
     setBookings(data);
   };
@@ -26,8 +24,7 @@ const MyBookings = () => {
     getData();
   }, [user]);
 
-  
-  const updateStatus = async (roomId,status) => {
+  const updateStatus = async (roomId, status) => {
     try {
       const { data } = await axios.patch(
         `${import.meta.env.VITE_API_URL}/rooms/${roomId}`,
@@ -38,93 +35,88 @@ const MyBookings = () => {
       console.error("Error updating room status:", error);
     }
   };
-  
 
-  const handleDelete = async (id,bookingDate, bookingId) => {
+  const handleDelete = async (id, bookingDate, bookingId) => {
     const oneDayBeforeBookingDate = new Date(bookingDate);
-    oneDayBeforeBookingDate.setDate(oneDayBeforeBookingDate.getDate() -1);
-    const currentDate= new Date();
+    oneDayBeforeBookingDate.setDate(oneDayBeforeBookingDate.getDate() - 1);
+    const currentDate = new Date();
 
     if (currentDate > oneDayBeforeBookingDate) {
-        Swal.fire({
-          title: "Cannot Delete!",
-          text: "You can only delete bookings one day before the booking date.",
-          icon: "error",
-        });
-        
-        return;
-      }
-    
       Swal.fire({
-        title: "Are you sure?",
-        text: "You won't be able to revert this!",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Confirm!",
-      }).then(async (result) => {
-        if (result.isConfirmed) {
-          try {
-            const { data } = await axios.delete(
-              `${import.meta.env.VITE_API_URL}/booking/${id}`
-            );
-            console.log(data);
-            Swal.fire({
-              title: "Canceled!",
-              text: "Your booking has been cancelled.",
-              icon: "success",
-            });
-            await updateStatus(bookingId,"available");
-            getData();
-           
-          } catch (error) {
-            console.error(error);
-            toast.error(error.message);
-          }
-        }
+        title: "Cannot Delete!",
+        text: "You can only delete bookings one day before the booking date.",
+        icon: "error",
       });
+
+      return;
+    }
+
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Confirm!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          const { data } = await axios.delete(
+            `${import.meta.env.VITE_API_URL}/booking/${id}`
+          );
+          console.log(data);
+          Swal.fire({
+            title: "Canceled!",
+            text: "Your booking has been cancelled.",
+            icon: "success",
+          });
+          await updateStatus(bookingId, "available");
+          getData();
+        } catch (error) {
+          console.error(error);
+          toast.error(error.message);
+        }
+      }
+    });
   };
-  
-  
-     
+
   const handleReviewSubmit = async (e, roomId) => {
     e.preventDefault();
     const form = e.target;
     const review = form.review.value;
     const rating = form.rating.value;
-    const name= user?.displayName;
-    const email= user?.email;
+    const name = user?.displayName;
+    const email = user?.email;
     const id = roomId;
-    const timestamp = moment().format('YYYY-MM-DD HH:mm:ss');
+    const timestamp = moment().format("YYYY-MM-DD HH:mm:ss");
     // console.log(timestamp);
-        console.log(review, rating);
+    console.log(review, rating);
     const reviewData = {
-        name,
-        email,
-        rating,
-        review,
-        timestamp,
-        id,
-
+      name,
+      email,
+      rating,
+      review,
+      timestamp,
+      id,
+    };
+    try {
+      const { data } = await axios.post(
+        `${import.meta.env.VITE_API_URL}/reviews`,
+        reviewData
+      );
+      toast.success("Review submitted successfully");
+      getData();
+      console.log(data);
+      if (modalRef.current) {
+        modalRef.current.close();
       }
-      try {
-        const {data} = await axios.post(`${import.meta.env.VITE_API_URL}/reviews`, reviewData)
-        toast.success('Review submitted successfully')
-        getData()
-        console.log(data);
-         if (modalRef.current) {
-            modalRef.current.close();
-          }
-        
-      } catch (error) {
-        console.log(error);
-        toast.error(error.message);
+    } catch (error) {
+      console.log(error);
+      toast.error(error.message);
       console.log(error.message);
-      }
-      
     }
-
+  };
 
   const handleUpdateFormSubmit = async (id) => {
     const bookingDate = startDate;
@@ -133,21 +125,21 @@ const MyBookings = () => {
       `${import.meta.env.VITE_API_URL}/booking-update/${id}`,
       { bookingDate }
     );
-    
+
     console.log(data);
     getData();
-    toast.success('Date updated successfully')
+    toast.success("Date updated successfully");
     if (modalRef.current) {
       modalRef.current.close();
     }
   };
   return (
     <div>
-        <Helmet>
-                <meta charSet="utf-8" />
-                <title>My Bookings - Stay Sphere</title>
-                <link rel="canonical" href="http://mysite.com/example" />
-            </Helmet>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>My Bookings - Stay Sphere</title>
+        <link rel="canonical" href="http://mysite.com/example" />
+      </Helmet>
       <div className="container p-2 mx-auto sm:p-4 dark:text-gray-800">
         <div className="flex  gap-5">
           <h2 className="mb-4 text-2xl font-semibold leading-tight">
@@ -203,8 +195,13 @@ const MyBookings = () => {
                   </td>
                   <td className="p-3 text-right">
                     <button
-                      onClick={() => handleDelete(booking._id , booking.bookingDate, booking.
-                        roomId)}
+                      onClick={() =>
+                        handleDelete(
+                          booking._id,
+                          booking.bookingDate,
+                          booking.roomId
+                        )
+                      }
                       className="btn px-4 font-semibold rounded-md dark:bg-[#CC9933] dark:text-gray-50"
                     >
                       Cancel
@@ -283,17 +280,20 @@ const MyBookings = () => {
                       Review
                     </button>
                     {/* You can open the modal using document.getElementById('ID').showModal() method */}
-                    <form method="dialog" onSubmit={(e) => handleReviewSubmit(e, booking.roomId
-)}>
-                    <dialog ref={modalRef} id="my_modal_3" className="modal">
-                      <div className="modal-box text-left">
-                        
+                    <form
+                      method="dialog"
+                      onSubmit={(e) => handleReviewSubmit(e, booking.roomId)}
+                    >
+                      <dialog ref={modalRef} id="my_modal_3" className="modal">
+                        <div className="modal-box text-left">
                           {/* if there is a button in form, it will close the modal */}
-                          
+
                           <h3 className="font-bold text-xl mb-5">
                             Share Your Experience with Us
                           </h3>
-                          <p className="text-lg font-semibold">Name: {user.displayName}</p>
+                          <p className="text-lg font-semibold">
+                            Name: {user.displayName}
+                          </p>
                           <textarea
                             id="subject"
                             name="review"
@@ -315,13 +315,14 @@ const MyBookings = () => {
                               <option value="1">1 star</option>
                             </select>
                           </div>
-                          <input className="mt-4 btn w-full text-white  bg-[#CC9933]" type="submit" value="Submit" />
-                          <p className="py-4">
-                            Press ESC key  to close
-                          </p>
-                        
-                      </div>
-                    </dialog>
+                          <input
+                            className="mt-4 btn w-full text-white  bg-[#CC9933]"
+                            type="submit"
+                            value="Submit"
+                          />
+                          <p className="py-4">Press ESC key to close</p>
+                        </div>
+                      </dialog>
                     </form>
                   </td>
                 </tr>

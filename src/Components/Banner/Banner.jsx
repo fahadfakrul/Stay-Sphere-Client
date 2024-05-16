@@ -16,7 +16,7 @@ const Banner = () => {
     if (modal) {
       modal.showModal();
     }
-  }
+  };
 
   const closeModal = () => {
     const modal = document.getElementById("my_modal_3");
@@ -27,7 +27,7 @@ const Banner = () => {
   };
 
   useEffect(() => {
-    if(location.pathname === "/") {
+    if (location.pathname === "/") {
       setShowModal(true);
     } else {
       setShowModal(false);
@@ -39,7 +39,6 @@ const Banner = () => {
       modalShow();
     }
   }, [showModal]);
-
 
   return (
     <div className="">
@@ -102,20 +101,21 @@ const Banner = () => {
           </div>
         </SwiperSlide>
       </Swiper>
-      
+
       {showModal && (
         <dialog id="my_modal_3" className="modal">
           <div className="modal-box modal-content h-[500px] slide flex justify-center items-center">
             <form method="dialog ">
               <button
                 onClick={closeModal}
-                className="btn btn-lg text-white btn-circle btn-ghost absolute right-2 top-2"
+                className="btn btn-md text-white btn-circle  btn-ghost absolute right-2 top-2"
               >
                 ✕
               </button>
             </form>
-            <h3 className="font-bold text-4xl text-white text-center">Get 20% discount at first booking and 10% at second booking!</h3>
-           
+            <h3 className="font-bold text-4xl text-white text-center">
+              Get 20% discount at first booking and 10% at second booking!
+            </h3>
           </div>
         </dialog>
       )}

@@ -1,14 +1,18 @@
 import { Link, useNavigate } from "react-router-dom";
 import UseAuth from "../Hooks/UseAuth";
 import toast from "react-hot-toast";
-import bgImg from "../assets/login.jpg"
+import bgImg from "../assets/login.jpg";
 import { Helmet } from "react-helmet";
+import axios from "axios";
 const Login = () => {
   const navigate = useNavigate();
   const { signInUser, googleLogin } = UseAuth();
   const handleGoogleLogin = async () => {
     try {
-      await googleLogin();
+      const result = await googleLogin();
+      console.log(result.user);
+      const {data} = await axios.post(`${import.meta.env.VITE_API_URL}/jwt`,{email: result?.user?.email},{withCredentials: true})
+      console.log(data);
       toast.success("Login successful");
       navigate("/");
     } catch (error) {
@@ -24,22 +28,24 @@ const Login = () => {
     console.log(email, password);
 
     try {
-        const result = await signInUser(email, password)
-        console.log(result);
-        toast.success("Login successful");
-        navigate("/")
+      const result = await signInUser(email, password);
+      console.log(result);
+      console.log(result.user);
+      const {data} = await axios.post(`${import.meta.env.VITE_API_URL}/jwt`,{email: result?.user?.email},{withCredentials: true})
+      console.log(data);
+      toast.success("Login successful");
+      navigate("/");
     } catch (error) {
-        toast.error(error?.message);
+      toast.error(error?.message);
     }
-    
   };
   return (
     <div className="flex w-full max-w-sm mx-auto overflow-hidden   rounded-xl my-12 shadow-lg  lg:max-w-4xl ">
       <Helmet>
-                <meta charSet="utf-8" />
-                <title>Login- Stay Sphere</title>
-                <link rel="canonical" href="http://mysite.com/example" />
-            </Helmet>
+        <meta charSet="utf-8" />
+        <title>Login- Stay Sphere</title>
+        <link rel="canonical" href="http://mysite.com/example" />
+      </Helmet>
       <div
         className="hidden bg-cover bg-bottom lg:block lg:w-1/2"
         style={{
@@ -138,9 +144,11 @@ const Login = () => {
           </div>
 
           <div className="mt-6">
-            <input type="submit" value="Sign In" className="w-full px-6 py-3 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-[#CC9933] rounded-lg hover:bg-gray-700 focus:outline-none focus:ring  focus:ring-gray-300 focus:ring-opacity-50">
-              
-            </input >
+            <input
+              type="submit"
+              value="Sign In"
+              className="w-full px-6 py-3 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-[#CC9933] rounded-lg hover:bg-gray-700 focus:outline-none focus:ring  focus:ring-gray-300 focus:ring-opacity-50"
+            ></input>
           </div>
         </form>
 

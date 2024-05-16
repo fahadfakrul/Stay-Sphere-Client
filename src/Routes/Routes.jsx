@@ -9,46 +9,49 @@ import RoomDetails from "../Pages/RoomDetails";
 import PrivateRoute from "../PrivateRoute/PrivateRoute";
 import MyBookings from "../Pages/MyBookings";
 
-
-
-
 const router = createBrowserRouter([
-    {
-      path: "/",
-      element: <Main></Main>,
-      errorElement: <ErrorPage></ErrorPage>,
-      children: [
-        {
-          path: "/",
-         element: <Home></Home>,
-         loader: () => fetch(`${import.meta.env.VITE_API_URL}/rooms`)
-        },
-        {
-          path: "/rooms",
-          element: <Rooms></Rooms>,
-          
-        },
-         {
-          path: "/login",
-          element: <Login></Login>,
-        },
-        {
-          path: "/register",
-          element: <Register></Register>,
-        },
-        {
-          path: "/mybookings",
-          element: <PrivateRoute><MyBookings></MyBookings></PrivateRoute>,
-         
-          
-        },
-        {
-          path: "/roomdetails/:id",
-          element: <PrivateRoute><RoomDetails></RoomDetails></PrivateRoute>,
-          loader: ({params}) => fetch(`${import.meta.env.VITE_API_URL}/room/${params.id}`)
-        },
-      ],
-    },
-  ]);
+  {
+    path: "/",
+    element: <Main></Main>,
+    errorElement: <ErrorPage></ErrorPage>,
+    children: [
+      {
+        path: "/",
+        element: <Home></Home>,
+        loader: () => fetch(`${import.meta.env.VITE_API_URL}/rooms`),
+      },
+      {
+        path: "/rooms",
+        element: <Rooms></Rooms>,
+      },
+      {
+        path: "/login",
+        element: <Login></Login>,
+      },
+      {
+        path: "/register",
+        element: <Register></Register>,
+      },
+      {
+        path: "/mybookings",
+        element: (
+          <PrivateRoute>
+            <MyBookings></MyBookings>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/roomdetails/:id",
+        element: (
+          <PrivateRoute>
+            <RoomDetails></RoomDetails>
+          </PrivateRoute>
+        ),
+        loader: ({ params }) =>
+          fetch(`${import.meta.env.VITE_API_URL}/room/${params.id}`),
+      },
+    ],
+  },
+]);
 
-  export default router;
+export default router;
