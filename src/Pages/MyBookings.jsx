@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import {  useRef, useState } from "react";
 import UseAuth from "../Hooks/UseAuth";
 import axios from "axios";
 import toast from "react-hot-toast";
@@ -6,31 +6,51 @@ import Swal from "sweetalert2";
 import ReactDatePicker from "react-datepicker";
 import moment from "moment";
 import { Helmet } from "react-helmet";
+import useAxiosSecure from "../Hooks/useAxiosSecure";
+import { useMutation, useQuery } from "@tanstack/react-query";
 moment().format();
 
 const MyBookings = () => {
+  const axiosSecure = useAxiosSecure();
   const { user } = UseAuth();
   const modalRef = useRef(null);
-  const [bookings, setBookings] = useState([]);
+  // const [bookings, setBookings] = useState([]);
   const [startDate, setStartDate] = useState(new Date());
 
-  const getData = async () => {
-    const { data } = await axios(
-      `${import.meta.env.VITE_API_URL}/bookings/${user?.email}`,{withCredentials: true}
-    );
-    setBookings(data);
-  };
-  useEffect(() => {
-    getData();
-  }, [user]);
+   const {data : bookings =[], isLoading, refetch} = useQuery({
+    queryFn: () => getData(),
+    queryKey:['bookings', user?.email]
+   })
+ console.log(bookings);
 
+  const getData = async () => {
+    const { data } = await axiosSecure(
+      `/bookings/${user?.email}`
+    );
+    return data;
+  };
+  // useEffect(() => {
+  //   getData();
+  // }, [user]);
+
+  const { mutateAsync } = useMutation({
+    mutationFn: async ({roomId, status}) => {
+      const { data } = await axiosSecure.patch(
+        `/rooms/${roomId}`,
+        { availability: status }
+      )
+      console.log(data);
+      return data;
+    },
+    onSuccess: ()=>{
+      console.log(" updatd successfully");
+      refetch()
+    }
+   })
+   
   const updateStatus = async (roomId, status) => {
     try {
-      const { data } = await axios.patch(
-        `${import.meta.env.VITE_API_URL}/rooms/${roomId}`,
-        { availability: status }
-      );
-      console.log("Room status updated:", data);
+     await mutateAsync({roomId, status})
     } catch (error) {
       console.error("Error updating room status:", error);
     }
@@ -133,6 +153,9 @@ const MyBookings = () => {
       modalRef.current.close();
     }
   };
+  if(isLoading) return (<div className="text-center">
+  <span className="loading loading-spinner text-black loading-lg "></span>
+</div>) 
   return (
     <div>
       <Helmet>
