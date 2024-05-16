@@ -14,3 +14,7 @@
 .slide-3{
     background-image: linear-gradient(180deg, rgba(3, 7, 18, 0.50) 0%, rgba(3, 7, 18, 0.00) 100%), url("../../assets/banner3.jpg");
 }
+
+.modal-content{
+    background-image: linear-gradient(180deg, rgba(3, 7, 18, 0.70) 0%, rgba(3, 7, 18, 0.30) 100%), url("../../assets/modal.jpg");
+}

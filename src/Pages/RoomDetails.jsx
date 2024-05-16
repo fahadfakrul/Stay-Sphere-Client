@@ -14,7 +14,18 @@ const RoomDetails = () => {
   const [startDate, setStartDate] = useState(new Date());
   const modalRef = useRef(null);
   const [reviews, setReviews] = useState([]);
-  console.log(reviews);
+  
+  const updateStatus = async (roomId,status) => {
+    try {
+      const { data } = await axios.patch(
+        `${import.meta.env.VITE_API_URL}/rooms/${roomId}`,
+        { availability: status }
+      );
+      console.log("Room status updated:", data);
+    } catch (error) {
+      console.error("Error updating room status:", error);
+    }
+  };
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     const roomId = roomDetails._id;
@@ -23,7 +34,9 @@ const RoomDetails = () => {
     const price = roomDetails.price_per_night;
     const name = user?.displayName;
     const email = user?.email;
-    const availability = roomDetails.availability;
+    
+
+    
     const bookingDate = startDate;
 
     const bookingData = {
@@ -33,7 +46,6 @@ const RoomDetails = () => {
       price,
       name,
       email,
-      availability,
       bookingDate,
     };
     try {
@@ -41,6 +53,8 @@ const RoomDetails = () => {
         `${import.meta.env.VITE_API_URL}/booking`,
         bookingData
       );
+    
+      await updateStatus(roomId,"unavailable");
       console.log(data);
     } catch (error) {
       console.log(error);

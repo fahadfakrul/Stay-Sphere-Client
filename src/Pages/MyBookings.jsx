@@ -13,7 +13,9 @@ const MyBookings = () => {
   const modalRef = useRef(null);
   const [bookings, setBookings] = useState([]);
   const [startDate, setStartDate] = useState(new Date());
-
+ 
+  
+ 
   const getData = async () => {
     const { data } = await axios(
       `${import.meta.env.VITE_API_URL}/bookings/${user?.email}`
@@ -24,34 +26,64 @@ const MyBookings = () => {
     getData();
   }, [user]);
 
-  const handleDelete = async (id) => {
-    Swal.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Confirm!",
-    }).then(async (result) => {
-      if (result.isConfirmed) {
-        try {
-          const { data } = await axios.delete(
-            `${import.meta.env.VITE_API_URL}/booking/${id}`
-          );
-          console.log(data);
-          Swal.fire({
-            title: "Canceled!",
-            text: "Your booking has been cancelled.",
-            icon: "success",
-          });
-          getData();
-        } catch (error) {
-          console.error(error);
-          toast.error(error.message);
-        }
+  
+  const updateStatus = async (roomId,status) => {
+    try {
+      const { data } = await axios.patch(
+        `${import.meta.env.VITE_API_URL}/rooms/${roomId}`,
+        { availability: status }
+      );
+      console.log("Room status updated:", data);
+    } catch (error) {
+      console.error("Error updating room status:", error);
+    }
+  };
+  
+
+  const handleDelete = async (id,bookingDate, bookingId) => {
+    const oneDayBeforeBookingDate = new Date(bookingDate);
+    oneDayBeforeBookingDate.setDate(oneDayBeforeBookingDate.getDate() -1);
+    const currentDate= new Date();
+
+    if (currentDate > oneDayBeforeBookingDate) {
+        Swal.fire({
+          title: "Cannot Delete!",
+          text: "You can only delete bookings one day before the booking date.",
+          icon: "error",
+        });
+        
+        return;
       }
-    });
+    
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Confirm!",
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          try {
+            const { data } = await axios.delete(
+              `${import.meta.env.VITE_API_URL}/booking/${id}`
+            );
+            console.log(data);
+            Swal.fire({
+              title: "Canceled!",
+              text: "Your booking has been cancelled.",
+              icon: "success",
+            });
+            await updateStatus(bookingId,"available");
+            getData();
+           
+          } catch (error) {
+            console.error(error);
+            toast.error(error.message);
+          }
+        }
+      });
   };
   
   
@@ -171,7 +203,8 @@ const MyBookings = () => {
                   </td>
                   <td className="p-3 text-right">
                     <button
-                      onClick={() => handleDelete(booking._id)}
+                      onClick={() => handleDelete(booking._id , booking.bookingDate, booking.
+                        roomId)}
                       className="btn px-4 font-semibold rounded-md dark:bg-[#CC9933] dark:text-gray-50"
                     >
                       Cancel
