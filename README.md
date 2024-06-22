@@ -22,7 +22,7 @@ Stay Sphere is a modern hotel booking platform designed to provide a seamless an
 - **Navigation Bar 🧭**
   - Links to the "Rooms" page and "My Bookings" page.
   - The "My Bookings" page is accessible only to authenticated users.
-  - About Us and Contact Us.
+
 
 - **Rooms Page 🛌**
   - Displays a list of available rooms with images.
@@ -64,3 +64,6 @@ Stay Sphere is a modern hotel booking platform designed to provide a seamless an
 - **Authentication**: Firebase authentication, JWT token implementation
 - **State Management**: Tanstack Query
 - **Map Integration**: Leaflet map library
+
+### To-Do:  
+- About Us and Contact Us.
