@@ -214,7 +214,7 @@ const MyBookings = () => {
                     <p className="dark:text-gray-600"></p>
                   </td> */}
                   <td className="p-3 ">
-                    <p>{booking.price}</p>
+                    <p>${booking.price}</p>
                   </td>
                   <td className="p-3 text-right">
                     <button
