@@ -59,7 +59,7 @@ const NavBar = () => {
             >
               My Bookings
             </NavLink>
-            <NavLink
+            {/* <NavLink
               className={({ isActive }) =>
                 isActive
                   ? "font-semibold text-lg  font-playfair  border-b-4 border-[#CC9933] px-5 py-3  "
@@ -78,7 +78,7 @@ const NavBar = () => {
               to="/contactus"
             >
               Contact Us
-            </NavLink>
+            </NavLink> */}
           </ul>
         </div>
         <img className="h-14 ml-5" src={logo} alt="" />
@@ -120,7 +120,7 @@ const NavBar = () => {
             >
               My Bookings
             </NavLink>
-            <NavLink
+            {/* <NavLink
               className={({ isActive }) =>
                 isActive
                   ? "font-semibold text-lg  font-playfair  border-b-4 border-[#CC9933] px-5 py-3  "
@@ -139,7 +139,7 @@ const NavBar = () => {
               to="/contactus"
             >
               Contact Us
-            </NavLink>
+            </NavLink> */}
           </ul>
         </div>
         {user ? (

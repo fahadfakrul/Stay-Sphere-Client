@@ -46,7 +46,7 @@ const Review = () => {
                     </div>
                   </div>
                   <div className="p-4 space-y-2 text-sm dark:text-gray-600">
-                    <p>{review.review}</p>
+                    <p>{review.review.slice(0,200)}</p>
                   </div>
                 </div>
               </div>
