@@ -67,3 +67,11 @@ Stay Sphere is a modern hotel booking platform designed to provide a seamless an
 
 ### To-Do:  
 - About Us and Contact Us.
+
+### Installation
+
+Follow these steps to install and run the project locally:
+1. Clone the repository
+2. cd your-repo-name
+3. npm install
+4. npm run dev
