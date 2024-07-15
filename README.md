@@ -75,3 +75,4 @@ Follow these steps to install and run the project locally:
 2. cd your-repo-name
 3. npm install
 4. npm run dev
+## Server side link: https://github.com/fahadfakrul/Stay-Sphere-Server
